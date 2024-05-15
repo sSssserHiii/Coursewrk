@@ -12,13 +12,24 @@ const LoginPage = () => {
   const [role, setRole] = useState("Provider");
 
 
+
+  const instance = axios.create({
+    baseURL: "http://localhost:3001",
+    withCredentials: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+  });
+  
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
 
     event.preventDefault();
   //  const response = await axios.post("/auth/sign_in", {username: login , password, role});
-    fetch("http:/localhost:3001/auth/sign_in", {method:"POST"}).then(r => console.log(r));
+    //fetch("http:/localhost:3001/auth/sign_in", {method:"POST"}).then(r => console.log(r));
+    instance.post("/auth/sign_in", {username: login , password, role}).then(r => console.log(r));
     console.log(response);
   };
 

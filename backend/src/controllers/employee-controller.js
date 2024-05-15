@@ -26,6 +26,9 @@ class EmployeeController{
    
 
 
+
+
+    
     async getEmployes(req, res)
     {
         console.log(req);
