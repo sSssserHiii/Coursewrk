@@ -15,6 +15,8 @@ class AuthController {
       `select employee_full_name, category from employeeuser where employeeuser.employee_full_name = $1 and employeeuser.login_password = $2`,
       [username, sha256(password)]
     );
+    console.log('Query result:', foundUser);
+
   }
   else if(role === "provider"){
    
@@ -22,9 +24,10 @@ class AuthController {
         `select full_name_of_contact_face, category from provider where provider.full_name_of_contact_face = $1 and provider.login_password = $2`,
         [username, sha256(password)]
       );
-      
+      console.log('Query result:', foundUser);
+
   }
-      if (!foundUser.rowCount) throw "no such user yet";
+      if (!foundUser.rowCount || foundUser.rowCount === 0) throw "no such user yet";
       // if select returned nothing then throw error
       const accessToken = jwt.sign(
         { username, role: foundUser.rows[0].category },
@@ -43,8 +46,11 @@ class AuthController {
       res.json({
         accessToken,
         role: foundUser.rows[0].category,
-        fullName: foundUser.rows[0].employee_full_name
-      });
+      fullName: role === "employeeuser" || role === "administrator" || role === "provider" 
+                ? foundUser.rows[0].employee_full_name 
+                : foundUser.rows[0].full_name_of_contact_face
+      
+              });
     } catch (err) {
       console.log(err);
       return res.status(401).json({ error: "invalid username or password" }); // unauthorized
