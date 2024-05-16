@@ -10,25 +10,23 @@ class AuthController {
       const { username, password, role} = req.body;
       console.log(username, password, role);
       let foundUser; 
-  if (role === "employeeuser" || role ==="administrator"){
+  if (role === "Employeeuser" || role ==="administrator"){
      foundUser = await db("connect_user").query(
       `select employee_full_name, category from employeeuser where employeeuser.employee_full_name = $1 and employeeuser.login_password = $2`,
       [username, sha256(password)]
     );
-    console.log('Query result:', foundUser);
-
   }
-  else if(role === "provider"){
+  else if(role === "Provider"){
    
      foundUser = await db("connect_user").query(
         `select full_name_of_contact_face, category from provider where provider.full_name_of_contact_face = $1 and provider.login_password = $2`,
         [username, sha256(password)]
       );
-      console.log('Query result:', foundUser);
 
   }
       if (!foundUser.rowCount || foundUser.rowCount === 0) throw "no such user yet";
       // if select returned nothing then throw error
+      console.log(foundUser.rowCount);
       const accessToken = jwt.sign(
         { username, role: foundUser.rows[0].category },
         "12343412",
