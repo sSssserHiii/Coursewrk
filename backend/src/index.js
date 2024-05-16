@@ -9,11 +9,11 @@ const app = express();
 const port = 3001;
 
 
-app.use(credentials);
-app.use(cors(corsOptions));
+// app.use(credentials);
+// app.use(cors(corsOptions));
 
 // app.use(credentials);
-// app.use(cors({origin:["http:/localhost:3001"], methods:["GET", "POST", "OPTIONS"]}));
+app.use(cors({origin:["http:/localhost:5173"], methods:["GET", "POST", "OPTIONS"]}));
 
 app.use(express.json());
 app.use(cookieParser());
