@@ -1,4 +1,6 @@
-import React from "react";
+// src/components/EmployeeDashboard/EmployeeDashboard.jsx
+import React, { useState } from "react";
+import "./employeeStyles.css";
 
 const EmployeePg = () => {
   const [activeSideMenu, setActiveSideMenu] = useState("");
@@ -13,57 +15,37 @@ const EmployeePg = () => {
   };
 
   return (
-    <div className="admin-dashboard">
+    <div className="employee-dashboard">
       <nav className="sidebar">
         <ul>
-          <li onClick={() => handleSideMenuClick("inventory")}>Inventory Management</li>
-          <li onClick={() => handleSideMenuClick("orders")}>Order Processing</li>
-          <li onClick={() => handleSideMenuClick("products")}>Product Catalog</li>
-          <li onClick={() => handleSideMenuClick("suppliers")}>Supplier Management</li>
-          <li onClick={() => handleSideMenuClick("reports")}>Reports and Analytics</li>
-          <li onClick={() => handleSideMenuClick("users")}>User Management</li>
+          <li onClick={() => handleSideMenuClick("tasks")}>Task Management</li>
+          <li onClick={() => handleSideMenuClick("projects")}>Project Overview</li>
+          <li onClick={() => handleSideMenuClick("calendar")}>Calendar</li>
+          <li onClick={() => handleSideMenuClick("messages")}>Messages</li>
+          <li onClick={() => handleSideMenuClick("reports")}>Reports</li>
+          <li onClick={() => handleSideMenuClick("profile")}>Profile</li>
           <li onClick={() => handleSideMenuClick("settings")}>Settings</li>
-          <li onClick={() => handleSideMenuClick("notifications")}>Notifications</li>
-          <li onClick={() => handleSideMenuClick("feedback")}>Feedback</li>
-          <li onClick={() => handleSideMenuClick("support")}>Support</li>
         </ul>
       </nav>
       <div className="main-content">
         <nav className="topbar">
           <ul>
-            <li onClick={() => handleTopMenuClick("stat1")}>Statistic 1</li>
-            <li onClick={() => handleTopMenuClick("stat2")}>Statistic 2</li>
-            <li onClick={() => handleTopMenuClick("stat3")}>Statistic 3</li>
-            <li onClick={() => handleTopMenuClick("stat4")}>Statistic 4</li>
-            <li onClick={() => handleTopMenuClick("stat5")}>Statistic 5</li>
-            <li onClick={() => handleTopMenuClick("stat6")}>Statistic 6</li>
-            <li onClick={() => handleTopMenuClick("stat7")}>Statistic 7</li>
-            <li onClick={() => handleTopMenuClick("stat8")}>Statistic 8</li>
-            <li onClick={() => handleTopMenuClick("stat9")}>Statistic 9</li>
-            <li onClick={() => handleTopMenuClick("stat10")}>Statistic 10</li>
+            <li onClick={() => handleTopMenuClick("stat1")}>Daily Stats</li>
+            <li onClick={() => handleTopMenuClick("stat2")}>Weekly Stats</li>
+            <li onClick={() => handleTopMenuClick("stat3")}>Monthly Stats</li>
           </ul>
         </nav>
         <div className="content">
-          {activeSideMenu === "inventory" && <div>Inventory Management Content</div>}
-          {activeSideMenu === "orders" && <div>Order Processing Content</div>}
-          {activeSideMenu === "products" && <div>Product Catalog Content</div>}
-          {activeSideMenu === "suppliers" && <div>Supplier Management Content</div>}
-          {activeSideMenu === "reports" && <div>Reports and Analytics Content</div>}
-          {activeSideMenu === "users" && <div>User Management Content</div>}
+          {activeSideMenu === "tasks" && <div>Task Management Content</div>}
+          {activeSideMenu === "projects" && <div>Project Overview Content</div>}
+          {activeSideMenu === "calendar" && <div>Calendar Content</div>}
+          {activeSideMenu === "messages" && <div>Messages Content</div>}
+          {activeSideMenu === "reports" && <div>Reports Content</div>}
+          {activeSideMenu === "profile" && <div>Profile Content</div>}
           {activeSideMenu === "settings" && <div>Settings Content</div>}
-          {activeSideMenu === "notifications" && <div>Notifications Content</div>}
-          {activeSideMenu === "feedback" && <div>Feedback Content</div>}
-          {activeSideMenu === "support" && <div>Support Content</div>}
-          {activeTopMenu === "stat1" && <div>Statistic 1 Content</div>}
-          {activeTopMenu === "stat2" && <div>Statistic 2 Content</div>}
-          {activeTopMenu === "stat3" && <div>Statistic 3 Content</div>}
-          {activeTopMenu === "stat4" && <div>Statistic 4 Content</div>}
-          {activeTopMenu === "stat5" && <div>Statistic 5 Content</div>}
-          {activeTopMenu === "stat6" && <div>Statistic 6 Content</div>}
-          {activeTopMenu === "stat7" && <div>Statistic 7 Content</div>}
-          {activeTopMenu === "stat8" && <div>Statistic 8 Content</div>}
-          {activeTopMenu === "stat9" && <div>Statistic 9 Content</div>}
-          {activeTopMenu === "stat10" && <div>Statistic 10 Content</div>}
+          {activeTopMenu === "stat1" && <div>Daily Stats Content</div>}
+          {activeTopMenu === "stat2" && <div>Weekly Stats Content</div>}
+          {activeTopMenu === "stat3" && <div>Monthly Stats Content</div>}
         </div>
       </div>
     </div>

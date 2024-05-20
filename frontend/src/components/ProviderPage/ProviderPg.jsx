@@ -1,4 +1,6 @@
-import React from "react";
+// src/components/ProviderDashboard/ProviderDashboard.jsx
+import React, { useState } from "react";
+import "./providerStyles.css";
 
 const ProviderPg = () => {
   const [activeSideMenu, setActiveSideMenu] = useState("");
@@ -13,7 +15,7 @@ const ProviderPg = () => {
   };
 
   return (
-    <div className="admin-dashboard">
+    <div className="provider-dashboard">
       <nav className="sidebar">
         <ul>
           <li onClick={() => handleSideMenuClick("inventory")}>Inventory Management</li>
@@ -71,3 +73,4 @@ const ProviderPg = () => {
 };
 
 export default ProviderPg;
+
