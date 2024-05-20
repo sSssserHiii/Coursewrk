@@ -1,17 +1,17 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import providerPage from "../components/ProviderPage/ProviderPage";
-import employeePage from "../components/EmployeePage/EmployeePage";
-import adminPage from "../components/AdminPage/AdminPage";
-import LoginPage from "../components/Auth/LoginPage" 
+import ProviderPg from "../components/ProviderPage/ProviderPg";
+import EmployeePg from "../components/EmployeePage/EmployeePg";
+import AdminPg from "../components/AdminPage/AdminPg";
+import LoginPage from "../components/Auth/LoginPage" ;
 
 const AppRoutes = () => (
   <Routes>
     <Route path="/login" element={<LoginPage />} />
-    <Route path="/provider" element={<ProviderPage />} />
-    <Route path="/employee" element={<EmployeePage />} />
-    <Route path="/admin" element={<AdminPage />} />
+    <Route path="/provider" element={<ProviderPg />} />
+    <Route path="/employee" element={<EmployeePg />} />
+    <Route path="/admin" element={<AdminPg />} />
   </Routes>
 );
 
