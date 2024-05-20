@@ -37,10 +37,21 @@ const LoginPage = () => {
   const handleSubmit = async (event) => {
 
     event.preventDefault();
-  //  const response = await axios.post("/auth/sign_in", {username: login , password, role});
-    //fetch("http:/localhost:3001/auth/sign_in", {method:"POST"}).then(r => console.log(r));
+    try{ 
     instance.post("/auth/sign_in", {username: login , password, role}).then(r => console.log(r));
-    
+    // navigate("/");
+    const userRole = response.data.role;
+    if (userRole === "Provider") {
+      navigate("/provider");
+    } else if (userRole === "Employee") {
+      navigate("/employee");
+    } else if (userRole === "Administrator") {
+      navigate("/admin");
+    }
+  }catch (error) {
+    console.error("Error:", error);
+    setError("Invalid username or password");
+  }
   };
 
   return (
