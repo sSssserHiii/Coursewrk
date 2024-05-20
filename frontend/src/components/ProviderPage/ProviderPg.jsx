@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProviderPage = () => {
+const ProviderPg = () => {
   return (
     <div>
       <h1>Provider Page</h1>
@@ -9,4 +9,4 @@ const ProviderPage = () => {
   );
 };
 
-export default ProviderPage;
+export default ProviderPg;
