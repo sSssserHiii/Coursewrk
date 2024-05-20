@@ -24,13 +24,23 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     const response = await instance.post("/auth/sign_in", { username: login, password, role });
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
+
   const handleSubmit = async (event) => {
 
     event.preventDefault();
   //  const response = await axios.post("/auth/sign_in", {username: login , password, role});
     //fetch("http:/localhost:3001/auth/sign_in", {method:"POST"}).then(r => console.log(r));
     instance.post("/auth/sign_in", {username: login , password, role}).then(r => console.log(r));
-    console.log(response);
+    
   };
 
   return (
@@ -58,6 +68,9 @@ const LoginPage = () => {
           </option>
           <option>
             Employee
+          </option>
+          <option>
+            Administrator
           </option>
         </select>
         <button

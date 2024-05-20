@@ -10,7 +10,7 @@ class AuthController {
       const { username, password, role} = req.body;
       console.log('Received credentials:', username, password, role);
       let foundUser; 
-  if (role === "Employee" || role ==="administrator"){
+  if (role === "Employee" || role ==="Administrator"){
      foundUser = await db("connect_user").query(
       `select employee_full_name, category from employeeuser where employeeuser.employee_full_name = $1 and employeeuser.login_password = $2`,
       [username, sha256(password)]
