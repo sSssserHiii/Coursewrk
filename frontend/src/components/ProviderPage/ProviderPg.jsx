@@ -1,6 +1,6 @@
 // src/components/ProviderDashboard/ProviderDashboard.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./providerStyles.css";
 
 const ProviderPg = () => {
@@ -8,6 +8,9 @@ const ProviderPg = () => {
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [userMenuVisible, setUserMenuVisible] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const userName = location.state?.userName;
+
 
 
   const handleSideMenuClick = (menu) => {
@@ -44,7 +47,7 @@ const ProviderPg = () => {
         <div className="user-profile" onClick={toggleUserMenu}>
           <div className="user-icon"></div>
           <div className="user-info">
-            <div className="user-name">John Doe</div>
+            <div className="user-name">{userName}</div>
             <div className="user-role">Provider</div>
           </div>
           {userMenuVisible && (

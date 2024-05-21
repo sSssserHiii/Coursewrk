@@ -9,6 +9,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("Provider");
 
+
   const instance = axios.create({
     baseURL: "http://localhost:3001",
     withCredentials: true,
@@ -28,14 +29,15 @@ const LoginPage = () => {
       // Проверка, что response.data содержит role
       if (response.data && response.data.role) {
         const userRole = response.data.role;
+        const userName = response.data.username;
         console.log("User role:", userRole);
 
         if (userRole === "provider") {
-          navigate("/provider");
+          navigate("/provider", { state: { userName: login } });
         } else if (userRole === "employeeuser") {
-          navigate("/employee");
+          navigate("/employee", { state: { userName: login } });
         } else if (userRole === "administrator") {
-          navigate("/admin");
+          navigate("/admin", { state: { userName: login } }); // Передача имени пользователя при переходе на страницу администратора
         } else {
           setError("Unknown role");
         }

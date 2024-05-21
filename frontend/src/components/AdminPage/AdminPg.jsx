@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./adminStyles.css";
 
 const AdminPg = () => {
   const [activeSideMenu, setActiveSideMenu] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [userMenuVisible, setUserMenuVisible] = useState(false);
-  const [userName, setUserName] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+  const userName = location.state?.userName;
 
-
+ 
 
   const handleSideMenuClick = (menu) => {
     setActiveSideMenu(menu);
@@ -45,7 +46,7 @@ const AdminPg = () => {
         <div className="user-profile" onClick={toggleUserMenu}>
           <div className="user-icon"></div>
           <div className="user-info">
-            <div className="user-name">John Doe</div>
+            <div className="user-name">{userName}</div>
             <div className="user-role">Administrator</div>
           </div>
           {userMenuVisible && (
