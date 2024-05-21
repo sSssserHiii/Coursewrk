@@ -4,6 +4,7 @@ import "./adminStyles.css";
 const AdminPg = () => {
   const [activeSideMenu, setActiveSideMenu] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
+  const [userMenuVisible, setUserMenuVisible] = useState(false);
 
   const handleSideMenuClick = (menu) => {
     setActiveSideMenu(menu);
@@ -13,9 +14,30 @@ const AdminPg = () => {
     setActiveTopMenu(menu);
   };
 
+  const toggleUserMenu = () => {
+    setUserMenuVisible(!userMenuVisible);
+  };
+
+  const handleLogout = () => {
+    console.log("Logged out");
+    // Add your logout logic here
+  };
+
   return (
     <div className="admin-dashboard">
       <nav className="sidebar">
+        <div className="user-profile" onClick={toggleUserMenu}>
+          <div className="user-icon"></div>
+          <div className="user-info">
+            <div className="user-name">John Doe</div>
+            <div className="user-role">Administrator</div>
+          </div>
+          {userMenuVisible && (
+            <ul className="user-menu">
+              <li onClick={handleLogout}>Log out</li>
+            </ul>
+          )}
+        </div>
         <ul>
           <li onClick={() => handleSideMenuClick("inventory")}>Inventory Management</li>
           <li onClick={() => handleSideMenuClick("orders")}>Order Processing</li>
@@ -72,4 +94,3 @@ const AdminPg = () => {
 };
 
 export default AdminPg;
-

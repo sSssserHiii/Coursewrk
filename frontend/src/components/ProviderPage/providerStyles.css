@@ -1,90 +1,141 @@
-/* src/components/ProviderDashboard/providerDashboard.css */
+/* src/components/ProviderDashboard/providerStyles.css */
 body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-  }
-  
-  
-  
-  .sidebar {
-    width: 250px;
-    background-color: #ffffff;
-    color: #00bfff;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    overflow-y: auto;
-  }
-  
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .sidebar ul li {
-    padding: 15px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .sidebar ul li:hover {
-    background-color: #e0f7ff;
-  }
-  
-  .main-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    margin-left: 250px;
-    padding-top: 60px;
-  }
-  
-  .topbar {
-    background-color: #ffffff;
-    color: #00bfff;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: 250px;
-    right: 0;
-    border-bottom: 1px solid #e0f7ff;
-    z-index: 1;
-  }
-  
-  .topbar ul {
-    list-style: none;
-    display: flex;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .topbar ul li {
-    margin: 0 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.3s;
-  }
-  
-  .topbar ul li:hover {
-    border-bottom: 2px solid #00bfff;
-  }
-  
-  .content {
-    flex-grow: 1;
-    padding: 20px;
-    color: #000000;
-    background-color: #ffffff;
-    overflow-y: auto;
-  }
-  
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  color: #00bfff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #e0f7ff;
+  position: relative;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #00bfff;
+  margin-right: 10px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.user-role {
+  font-size: 12px;
+  color: #777;
+}
+
+.user-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #e0f7ff;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.user-menu li {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.user-menu li:hover {
+  background-color: #e0f7ff;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  padding: 15px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sidebar ul li:hover {
+  background-color: #e0f7ff;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px;
+  padding-top: 60px;
+}
+
+.topbar {
+  background-color: #ffffff;
+  color: #00bfff;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 250px;
+  right: 0;
+  border-bottom: 1px solid #e0f7ff;
+  z-index: 1;
+}
+
+.topbar ul {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+.topbar ul li {
+  margin: 0 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.topbar ul li:hover {
+  border-bottom: 2px solid #00bfff;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  color: #000000;
+  background-color: #ffffff;
+  overflow-y: auto;
+}

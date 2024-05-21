@@ -1,4 +1,4 @@
-/* src/components/EmployeeDashboard/employeeDashboard.css */
+/* src/components/EmployeeDashboard/employeeStyles.css */
 body, html {
   margin: 0;
   padding: 0;
@@ -19,6 +19,60 @@ body, html {
   top: 0;
   bottom: 0;
   overflow-y: auto;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #e0f7ff;
+  position: relative;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #00aaff;
+  margin-right: 10px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.user-role {
+  font-size: 12px;
+  color: #777;
+}
+
+.user-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #e0f7ff;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.user-menu li {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.user-menu li:hover {
+  background-color: #e0f7ff;
 }
 
 .sidebar ul {

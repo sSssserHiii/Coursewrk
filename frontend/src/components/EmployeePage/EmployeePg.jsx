@@ -5,6 +5,7 @@ import "./employeeStyles.css";
 const EmployeePg = () => {
   const [activeSideMenu, setActiveSideMenu] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
+  const [userMenuVisible, setUserMenuVisible] = useState(false);
 
   const handleSideMenuClick = (menu) => {
     setActiveSideMenu(menu);
@@ -14,9 +15,30 @@ const EmployeePg = () => {
     setActiveTopMenu(menu);
   };
 
+  const toggleUserMenu = () => {
+    setUserMenuVisible(!userMenuVisible);
+  };
+
+  const handleLogout = () => {
+    console.log("Logged out");
+    // Add your logout logic here
+  };
+
   return (
     <div className="employee-dashboard">
       <nav className="sidebar">
+        <div className="user-profile" onClick={toggleUserMenu}>
+          <div className="user-icon"></div>
+          <div className="user-info">
+            <div className="user-name">Jane Smith</div>
+            <div className="user-role">Employee</div>
+          </div>
+          {userMenuVisible && (
+            <ul className="user-menu">
+              <li onClick={handleLogout}>Log out</li>
+            </ul>
+          )}
+        </div>
         <ul>
           <li onClick={() => handleSideMenuClick("tasks")}>Task Management</li>
           <li onClick={() => handleSideMenuClick("projects")}>Project Overview</li>
