@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import instance from "../../utils/axiosConfig";
 import "./authPages.css";
 
 const LoginPage = () => {
@@ -10,13 +11,13 @@ const LoginPage = () => {
   const [role, setRole] = useState("Provider");
 
 
-  const instance = axios.create({
-    baseURL: "http://localhost:3001",
-    withCredentials: true,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-  });
+  // const instance = axios.create({
+  //   baseURL: "http://localhost:3001",
+  //   withCredentials: true,
+  //   headers: {
+  //     "Access-Control-Allow-Origin": "*",
+  //   },
+  // });
 
   const navigate = useNavigate();
 

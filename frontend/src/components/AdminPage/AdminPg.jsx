@@ -71,8 +71,8 @@ const AdminPg = () => {
       <div className="main-content">
         <nav className="topbar">
           <ul>
-            <li onClick={() => handleTopMenuClick("stat1")}>Statistic 1</li>
-            <li onClick={() => handleTopMenuClick("stat2")}>Statistic 2</li>
+            <li onClick={() => handleTopMenuClick("stat1")}>Add new Employee</li>
+            <li onClick={() => handleTopMenuClick("stat2")}>Add new Item</li>
             <li onClick={() => handleTopMenuClick("stat3")}>Statistic 3</li>
             <li onClick={() => handleTopMenuClick("stat4")}>Statistic 4</li>
             <li onClick={() => handleTopMenuClick("stat5")}>Statistic 5</li>
