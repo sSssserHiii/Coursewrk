@@ -1,11 +1,14 @@
 // src/components/ProviderDashboard/ProviderDashboard.jsx
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./providerStyles.css";
 
 const ProviderPg = () => {
   const [activeSideMenu, setActiveSideMenu] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [userMenuVisible, setUserMenuVisible] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleSideMenuClick = (menu) => {
     setActiveSideMenu(menu);
@@ -20,8 +23,19 @@ const ProviderPg = () => {
   };
 
   const handleLogout = () => {
-    console.log("Logged out");
-    // Add your logout logic here
+    fetch("/sign_out", { method: "GET" })
+      .then((response) => {
+        if (response.ok) {
+          // Успешно разлогинились, перенаправляем на страницу входа
+          navigate("/login"); // Изменено на navigate
+        } else {
+          // Обработка ошибок, если не удалось разлогиниться
+          console.error("Failed to sign out");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
 
   return (
