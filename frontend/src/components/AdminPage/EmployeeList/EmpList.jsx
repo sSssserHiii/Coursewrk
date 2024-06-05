@@ -1,44 +1,81 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
-import "./empListStyle.css";
+import { useNavigate } from "react-router-dom";
+import "./userPageStyles.css"; // Создайте стили для этой страницы
 
+const UserPage = ({ users }) => {
+  const [filteredUsers, setFilteredUsers] = useState(users);
+  const navigate = useNavigate();
 
+  // Функция для фильтрации пользователей по ролям
+  const filterUsersByRole = (role) => {
+    const filtered = users.filter(user => user.role === role);
+    setFilteredUsers(filtered);
+  };
 
-// const instance = axios.create({
-//     baseURL: "http://localhost:3001",
-//     withCredentials: true,
-//     headers: {
-//       "Access-Control-Allow-Origin": "*",
-//     },
-//   });
-
-//const response = await instance.post("/auth/sign_in", { username: login, password, role });
-     
-
-const EmpList = () => {
-    const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/user/get") // Измените URL на ваш эндпоинт для получения списка пользователей
-      .then(response => {
-        setUsers(response.data);
-      })
-      .catch(error => {
-        console.error("There was an error fetching the users!", error);
-      });
-  }, []);
+  // Вернуть всех пользователей
+  const resetFilter = () => {
+    setFilteredUsers(users);
+  };
 
   return (
-    <div>
-      <h2>User Management</h2>
-      <ul>
-        {users.map(user => (
-          <li key={user.id}>{user.name}</li>
+    <div className="user-page">
+      <div className="user-info">
+        <div className="user-icon"></div>
+        <div className="user-details">
+          <div className="user-name">{userName}</div>
+          <div className="user-role">Administrator</div>
+        </div>
+      </div>
+      <div className="user-actions">
+        <button onClick={() => navigate("/admin")} className="back-button">Back to Admin Dashboard</button>
+        <div className="filter-buttons">
+          <button onClick={() => filterUsersByRole("role1")}>Role 1</button>
+          <button onClick={() => filterUsersByRole("role2")}>Role 2</button>
+          <button onClick={() => filterUsersByRole("role3")}>Role 3</button>
+          <button onClick={() => resetFilter()}>Show All</button>
+        </div>
+      </div>
+      <div className="user-list">
+        {filteredUsers.map(user => (
+          <div key={user.id} className="user-block">
+            <div>{user.name}</div>
+            <div>{user.role}</div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
-  };
-  
-  export default EmpList;
+};
+
+export default UserPage;
+// import React from "react";
+// import "./empListStyle.css";
+
+// const EmpList = ({ users, providers }) => {
+//   return (
+//     <div>
+//       <h2>Employees</h2>
+//       {Array.isArray(users) && users.length > 0 ? (
+//         users.map((user) => (
+//           <div key={user.employee_id}>{user.employee_full_name}</div>
+//         ))
+//       ) : (
+//         <div>No users available</div>
+//       )}
+      
+//       <h2>Providers</h2>
+//       {Array.isArray(providers) && providers.length > 0 ? (
+//         providers.map((provider) => (
+//           <div key={provider.provider_id}>{provider.provider_name}</div>
+//         ))
+//       ) : (
+//         <div>No providers available</div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default EmpList;
+
+
+

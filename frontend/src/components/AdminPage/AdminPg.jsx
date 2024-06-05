@@ -1,19 +1,55 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
 import "./adminStyles.css";
+import EmpList from "./EmployeeList/EmpList";
+import instance from "../../utils/axiosConfig";
 
 const AdminPg = () => {
   const [activeSideMenu, setActiveSideMenu] = useState("");
   const [activeTopMenu, setActiveTopMenu] = useState("");
   const [userMenuVisible, setUserMenuVisible] = useState(false);
+  const [users, setUsers] = useState([]); // Ensure initial state is an array
+  const [providers, setProviders] = useState([]); // State for providers
   const navigate = useNavigate();
   const location = useLocation();
   const userName = location.state?.userName;
 
- 
+  useEffect(() => {
+    // Fetching employee data
+    instance.get("/user/get")
+      .then(response => {
+        console.log("Employee API response:", response.data); // Check the response
+
+        if (response.data && response.data.rows) {
+          setUsers(response.data.rows); // Update state with employee data
+        } else {
+          console.error("Unexpected response format", response.data);
+        }
+      }).catch(error => {
+        console.error("There was an error fetching the employees!", error);
+      });
+
+    // Fetching provider data
+    instance.get("/provider/getall")
+      .then(response => {
+        console.log("Provider API response:", response.data); // Check the response
+
+        if (response.data && response.data.rows) {
+          setProviders(response.data.rows); // Update state with provider data
+        } else {
+          console.error("Unexpected response format", response.data);
+        }
+      })
+      .catch(error => {
+        console.error("There was an error fetching the providers!", error);
+      });
+  }, []);
 
   const handleSideMenuClick = (menu) => {
     setActiveSideMenu(menu);
+    if (menu === "users") {
+      navigate("/admin/users");
+    }
   };
 
   const handleTopMenuClick = (menu) => {
@@ -24,14 +60,12 @@ const AdminPg = () => {
     setUserMenuVisible(!userMenuVisible);
   };
 
-   const handleLogout = () => {
+  const handleLogout = () => {
     fetch("/sign_out", { method: "GET" })
       .then((response) => {
         if (response.ok) {
-          // Успешно разлогинились, перенаправляем на страницу входа
-          navigate("/login"); // Изменено на navigate
+          navigate("/login");
         } else {
-          // Обработка ошибок, если не удалось разлогиниться
           console.error("Failed to sign out");
         }
       })
@@ -89,7 +123,9 @@ const AdminPg = () => {
           {activeSideMenu === "products" && <div>Product Catalog Content</div>}
           {activeSideMenu === "suppliers" && <div>Supplier Management Content</div>}
           {activeSideMenu === "reports" && <div>Reports and Analytics Content</div>}
-          {activeSideMenu === "users" && <div>User Management Content</div>}
+          <Routes>
+            <Route path="users" element={<EmpList users={users} providers={providers} />} />
+          </Routes>
           {activeSideMenu === "settings" && <div>Settings Content</div>}
           {activeSideMenu === "notifications" && <div>Notifications Content</div>}
           {activeSideMenu === "feedback" && <div>Feedback Content</div>}

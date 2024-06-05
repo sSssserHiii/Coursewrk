@@ -22,6 +22,9 @@ app.use(cookieParser());
 app.use("/user", require("./routes/employeeroutes"));
 app.use("/provider", require("./routes/providerroutes"));
 app.use("/auth", require("./routes/authroutes"));
+app.use('/category', require("./routes/category-routes"));
+
+
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`);

@@ -13,7 +13,7 @@ const AppRoutes = () => (
     <Route path="/login" element={<LoginPage />} />
     <Route path="/provider" element={<ProviderPg />} />
     <Route path="/employee" element={<EmployeePg />} />
-    <Route path="/admin" element={<AdminPg />} />
+    <Route path="/admin/*" element={<AdminPg />} />
   </Routes>
 );
 
