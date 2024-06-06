@@ -12,6 +12,9 @@ router.get("/username", ProviderController.getProviderByUsername);
 
 router.delete("/id/:id", ProviderController.deleteProviderByID);
 
+router.get("/single_product_providers", ProviderController.getProvidersWithSingleProduct);
+router.get("/provider_same_amount", ProviderController.getProductsByProviderWithSameAmount);
+
 
 // router.put("/id/:id", ProviderController.updateProviderById);
 

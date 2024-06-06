@@ -8,4 +8,9 @@ router.get('/:id', StoreController.getStoreById);
 router.put('/:id', StoreController.updateStoreById);
 router.delete('/:id', StoreController.deleteStoreById);
 
+
+router.post("/total_products_sent", StoreController.getTotalProductsSentToStore);
+
+
+
 module.exports = router;

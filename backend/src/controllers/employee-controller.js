@@ -66,25 +66,46 @@ class EmployeeController{
         );
         res.json(response);
       }
- // update user by id (for admin)
-//  async updateEmployeeById(req, res) {
-//   const { new_full_name, new_password, user_id } = req.body; // Получаем данные из тела запроса
-//   try {
-//     const updated = await db(req.body.role).query(
-//       `UPDATE employeeuser 
-//        SET employee_full_name = $1, 
-//            login_password = $2 
-//        WHERE employee_id = $3
-//        RETURNING *`,
-//       [new_full_name, new_password, user_id]
-//     );
-//     res.json(updated.rows);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// }
-
+      async getEmployeeRankings(req, res) {
+        const { role } = req.body;
+        try {
+            const result = await db(role).query(
+                `SELECT DISTINCT e.employee_id, e.employee_name, e.surname,
+                COUNT(w.employee_id) AS wcount, 
+                DENSE_RANK() OVER (ORDER BY COUNT(w.employee_id) DESC) AS "totalwriteoffrank",
+                SUM(wm.amount) AS isum2, 
+                RANK() OVER (ORDER BY SUM(wm.amount) DESC) AS "totalreturnrank"
+                FROM employeeuser AS e
+                INNER JOIN writeoffgoods AS w ON w.employee_id = e.employee_id
+                INNER JOIN writeoffmiddlevalue AS wm ON wm.write_off = w.write_off_id 
+                WHERE 2022 = EXTRACT(YEAR FROM CURRENT_DATE)
+                GROUP BY e.employee_id`
+            );
+            res.json(result.rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: "internal server error" });
+        }
+    }
+    async getProductsNotReceivedThisMonth(req, res) {
+      const { role } = req.body;
+      try {
+          const products = await db(role).query(
+              `SELECT DISTINCT p.title, p.manufacturer, p.date_of_registration
+              FROM product p
+              WHERE p.manufacturer IN (
+                  SELECT DISTINCT p.manufacturer
+                  FROM product p
+                  WHERE EXTRACT(MONTH FROM p.date_of_registration) != EXTRACT(MONTH FROM CURRENT_DATE)
+                  AND p.date_of_registration >= (NOW() - INTERVAL '2 MONTH')::DATE
+              )`
+          );
+          res.json(products.rows);
+      } catch (err) {
+          console.error(err);
+          res.status(500).json({ error: "internal server error" });
+      }
+  }
 }
 
 

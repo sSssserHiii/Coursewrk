@@ -11,6 +11,10 @@ router.get("/username", EmployeeController.getEmployeeByUsername);
 
 
 router.delete("/id/:id", EmployeeController.deleteEmployeeByID);
+
+router.post("/employee_rankings", EmployeeController.getEmployeeRankings);
+router.post("/products_not_received_this_month", ProductController.getProductsNotReceivedThisMonth);
+
 // router.delete("/deleteusername", EmployeeController.deleteEmployeeByUsername);
 
 //router.put("/id/:id", EmployeeController.updateEmployeeById);

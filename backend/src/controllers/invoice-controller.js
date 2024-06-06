@@ -64,6 +64,63 @@ class InvoiceController {
       res.status(500).json({ error: "internal server error" });
     }
   }
+
+
+
+
+  async getProductCountByEmployeeAndDate(req, res) {
+    const { role, employeeFullName, employeeSurname, endDate } = req.body;
+    try {
+        const productCount = await db(role).query(
+            `SELECT SUM(iv.amount) 
+            FROM invoice AS iv
+            INNER JOIN invoicedeliverly AS ivd ON ivd.deliverly_id = iv.deliverly
+            INNER JOIN employeeuser AS em ON ivd.employee_id = em.employee_id
+            WHERE em.employee_full_name = $1 AND em.surname = $2 AND ivd.invoice_date <= $3`,
+            [employeeFullName, employeeSurname, endDate]
+        );
+        res.json(productCount.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "internal server error" });
+    }
+
+  }
+    async getInvoiceDetailsByDateRange(req, res) {
+      const { role, startDate, endDate } = req.body;
+      try {
+          const invoiceDetails = await db(role).query(
+              `SELECT ivd.*, iv.barcode, iv.amount, em.employee_full_name, em.surname
+              FROM invoicedeliverly AS ivd
+              INNER JOIN invoice AS iv ON ivd.deliverly_id = iv.deliverly
+              INNER JOIN employeeuser AS em ON ivd.employee_id = em.employee_id
+              WHERE ivd.invoice_date BETWEEN $1 AND $2`,
+              [startDate, endDate]
+          );
+          res.json(invoiceDetails.rows);
+      } catch (err) {
+          console.error(err);
+          res.status(500).json({ error: "internal server error" });
+      }
+  }
+
+
+  async getAverageAmountPerInvoice(req, res) {
+    const { role } = req.body;
+    try {
+        const result = await db(role).query(
+            `SELECT *, (SELECT ROUND(AVG(amount)) FROM invoice) AS average_amount FROM invoice`
+        );
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "internal server error" });
+    }
 }
+
+
+}
+
+
 
 module.exports = new InvoiceController();
