@@ -21,6 +21,9 @@ const AdminPg = () => {
 
   const handleTopMenuClick = (menu) => {
     setActiveTopMenu(menu);
+    if (menu === "stat1") {
+      navigate("/admin/employees"); // Переход на страницу сотрудников
+    }
   };
 
   const toggleUserMenu = () => {
@@ -72,8 +75,8 @@ const AdminPg = () => {
       <div className="main-content">
         <nav className="topbar">
           <ul>
-            <li onClick={() => handleTopMenuClick("stat1")}>Добавить нового сотрудника</li>
-            <li onClick={() => handleTopMenuClick("stat2")}>Добавить новый предмет</li>
+            <li onClick={() => handleTopMenuClick("stat1")}>Сотрудники</li>
+            <li onClick={() => handleTopMenuClick("stat2")}>Товары</li>
             <li onClick={() => handleTopMenuClick("stat3")}>Статистика 3</li>
             <li onClick={() => handleTopMenuClick("stat4")}>Статистика 4</li>
             <li onClick={() => handleTopMenuClick("stat5")}>Статистика 5</li>
