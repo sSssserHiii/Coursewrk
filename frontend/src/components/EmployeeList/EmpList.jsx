@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import instance from "../../../utils/axiosConfig"; // Убедитесь, что путь правильный
+import instance from "../../utils/axiosConfig"; // Убедитесь, что путь правильный
 
 import "./empListStyle.css";
 
-const EmpList = () => {
+const EmpList = ({userRole}) => {
   const [users, setUsers] = useState([]);
   const [sortedUsers, setSortedUsers] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     // Получение данных о сотрудниках
-    instance.get("/user/get")
+    instance.get("/employee/get")
     .then(response => {
       console.log("Ответ API сотрудников:", response.data); // Проверка ответа
 
@@ -46,18 +46,36 @@ const EmpList = () => {
     });
 }, []);
 
+useEffect(() => {
+  // Устанавливаем начальную фильтрацию в зависимости от роли пользователя
+  if (userRole === "provider" || userRole === "employeeuser" || userRole ==="administrator") {
+    sortUsersByRole(userRole);
+  }
+}, [userRole, users]);
+
 const sortUsersByRole = (role) => {
-  const filtered = users.filter(user => user.category === role);
+  if(role != 'administrator'){
+
+    const filtered = users.filter(user => user.category === role);
   setSortedUsers(filtered);
+  }
 };
 
   const resetSort = () => {
     setSortedUsers(users);
   };
-
+  const handleBackButtonClick = () => {
+    if (userRole === "provider") {
+      navigate("/provider");
+    } else if (userRole === "employeeuser") {
+      navigate("/employee");
+    } else {
+      navigate("/admin");
+    }
+  };
   return (
     <div className="user-management-page">
-      <button className="back-button" onClick={() => navigate("/user")}>Главная страница</button>
+      <button className="back-button" onClick={handleBackButtonClick}>Главная страница</button>
       <h2>Управление пользователями</h2>
       <div className="sort-buttons">
         <button onClick={() => sortUsersByRole("provider")}>Провайдер</button>

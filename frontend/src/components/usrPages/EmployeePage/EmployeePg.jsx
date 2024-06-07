@@ -1,7 +1,9 @@
 // src/components/EmployeeDashboard/EmployeeDashboard.jsx
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
 import "./employeeStyles.css";
+import EmpList from "../../EmployeeList/EmpList"; // Убедитесь, что путь правильный
+
 
 const EmployeePg = () => {
   const [activeSideMenu, setActiveSideMenu] = useState("");
@@ -10,11 +12,14 @@ const EmployeePg = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const userName = location.state?.userName;
-
+  const userRole = "employeeuser";
 
 
   const handleSideMenuClick = (menu) => {
     setActiveSideMenu(menu);
+    if (menu === "users") {
+      navigate("/employee/users");
+    }
   };
 
   const handleTopMenuClick = (menu) => {
@@ -59,7 +64,7 @@ const EmployeePg = () => {
           <li onClick={() => handleSideMenuClick("tasks")}>Task Management</li>
           <li onClick={() => handleSideMenuClick("projects")}>Project Overview</li>
           <li onClick={() => handleSideMenuClick("calendar")}>Calendar</li>
-          <li onClick={() => handleSideMenuClick("messages")}>Messages</li>
+          <li onClick={() => handleSideMenuClick("users")}>Users</li>
           <li onClick={() => handleSideMenuClick("reports")}>Reports</li>
           <li onClick={() => handleSideMenuClick("profile")}>Profile</li>
           <li onClick={() => handleSideMenuClick("settings")}>Settings</li>
@@ -77,7 +82,9 @@ const EmployeePg = () => {
           {activeSideMenu === "tasks" && <div>Task Management Content</div>}
           {activeSideMenu === "projects" && <div>Project Overview Content</div>}
           {activeSideMenu === "calendar" && <div>Calendar Content</div>}
-          {activeSideMenu === "messages" && <div>Messages Content</div>}
+          <Routes>
+            <Route path="users" element={<EmpList userRole={userRole} />} />
+          </Routes>
           {activeSideMenu === "reports" && <div>Reports Content</div>}
           {activeSideMenu === "profile" && <div>Profile Content</div>}
           {activeSideMenu === "settings" && <div>Settings Content</div>}

@@ -1,7 +1,9 @@
 // src/components/ProviderDashboard/ProviderDashboard.jsx
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
 import "./providerStyles.css";
+import EmpList from "../../EmployeeList/EmpList"; 
+
 
 const ProviderPg = () => {
   const [activeSideMenu, setActiveSideMenu] = useState("");
@@ -10,11 +12,14 @@ const ProviderPg = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const userName = location.state?.userName;
-
+  const userRole = "provider";
 
 
   const handleSideMenuClick = (menu) => {
     setActiveSideMenu(menu);
+    if (menu === "users") {
+      navigate("/provider/users");
+    }
   };
 
   const handleTopMenuClick = (menu) => {
@@ -90,7 +95,9 @@ const ProviderPg = () => {
           {activeSideMenu === "products" && <div>Product Catalog Content</div>}
           {activeSideMenu === "suppliers" && <div>Supplier Management Content</div>}
           {activeSideMenu === "reports" && <div>Reports and Analytics Content</div>}
-          {activeSideMenu === "users" && <div>User Management Content</div>}
+          <Routes>
+            <Route path="users" element={<EmpList userRole={userRole} />} />
+          </Routes>
           {activeSideMenu === "settings" && <div>Settings Content</div>}
           {activeSideMenu === "notifications" && <div>Notifications Content</div>}
           {activeSideMenu === "feedback" && <div>Feedback Content</div>}

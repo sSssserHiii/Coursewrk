@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Routes, Route } from "react-router-dom";
 import "./adminStyles.css";
-import EmpList from "./EmployeeList/EmpList"; // Убедитесь, что путь правильный
+import EmpList from "../../EmployeeList/EmpList"; // Убедитесь, что путь правильный
 
 const AdminPg = () => {
   const [activeSideMenu, setActiveSideMenu] = useState("");
@@ -10,6 +10,7 @@ const AdminPg = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const userName = location.state?.userName;
+  const userRole = "administrator";
 
   const handleSideMenuClick = (menu) => {
     setActiveSideMenu(menu);
@@ -90,7 +91,7 @@ const AdminPg = () => {
           {activeSideMenu === "suppliers" && <div>Содержание управления поставщиками</div>}
           {activeSideMenu === "reports" && <div>Содержание отчетов и аналитики</div>}
           <Routes>
-            <Route path="users" element={<EmpList />} />
+            <Route path="users" element={<EmpList userRole={userRole} />} />
           </Routes>
           {activeSideMenu === "settings" && <div>Содержание настроек</div>}
           {activeSideMenu === "notifications" && <div>Содержание уведомлений</div>}
