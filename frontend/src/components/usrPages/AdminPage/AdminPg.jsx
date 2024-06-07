@@ -77,7 +77,7 @@ const AdminPg = () => {
           <ul>
             <li onClick={() => handleTopMenuClick("stat1")}>Сотрудники</li>
             <li onClick={() => handleTopMenuClick("stat2")}>Товары</li>
-            <li onClick={() => handleTopMenuClick("stat3")}>Статистика 3</li>
+            <li onClick={() => handleTopMenuClick("stat3")}>Магазины</li>
             <li onClick={() => handleTopMenuClick("stat4")}>Статистика 4</li>
             <li onClick={() => handleTopMenuClick("stat5")}>Статистика 5</li>
             <li onClick={() => handleTopMenuClick("stat6")}>Статистика 6</li>
