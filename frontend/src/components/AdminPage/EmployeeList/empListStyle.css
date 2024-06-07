@@ -1,0 +1,29 @@
+.user-management-page {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  
+  .sort-buttons {
+    margin: 20px 0;
+  }
+  
+  .sort-buttons button {
+    margin-right: 10px;
+  }
+  
+  .user-table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 80%;
+  }
+  
+  .user-table th, .user-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .user-table th {
+    background-color: #f2f2f2;
+  }
+  

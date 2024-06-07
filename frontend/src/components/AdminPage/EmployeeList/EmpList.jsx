@@ -1,81 +1,89 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./userPageStyles.css"; // Создайте стили для этой страницы
+import instance from "../../../utils/axiosConfig"; // Убедитесь, что путь правильный
 
-const UserPage = ({ users }) => {
-  const [filteredUsers, setFilteredUsers] = useState(users);
+import "./empListStyle.css";
+
+const EmpList = () => {
+  const [users, setUsers] = useState([]);
+  const [sortedUsers, setSortedUsers] = useState([]);
   const navigate = useNavigate();
 
-  // Функция для фильтрации пользователей по ролям
-  const filterUsersByRole = (role) => {
-    const filtered = users.filter(user => user.role === role);
-    setFilteredUsers(filtered);
-  };
+  useEffect(() => {
+    // Получение данных о сотрудниках
+    instance.get("/user/get")
+    .then(response => {
+      console.log("Ответ API сотрудников:", response.data); // Проверка ответа
 
-  // Вернуть всех пользователей
-  const resetFilter = () => {
-    setFilteredUsers(users);
+      if (response.data && response.data.rows) {
+        setUsers(response.data.rows); // Обновление состояния данными сотрудников
+        setSortedUsers(response.data.rows); // Инициализация sortedUsers
+      } else {
+        console.error("Неожиданный формат ответа", response.data);
+      }
+    }).catch(error => {
+      console.error("Ошибка при получении данных сотрудников!", error);
+    });
+
+  // Получение данных о провайдерах
+  instance.get("/provider/getall")
+    .then(response => {
+      console.log("Ответ API провайдеров:", response.data); // Проверка ответа
+
+      if (response.data && response.data.rows) {
+        const providers = response.data.rows.map(provider => ({
+          ...provider,
+          category: "provider" // Добавьте категорию для провайдеров
+        }));
+        setUsers(prevUsers => [...prevUsers, ...providers]);
+        setSortedUsers(prevUsers => [...prevUsers, ...providers]);
+      } else {
+        console.error("Неожиданный формат ответа", response.data);
+      }
+    })
+    .catch(error => {
+      console.error("Ошибка при получении данных провайдеров!", error);
+    });
+}, []);
+
+const sortUsersByRole = (role) => {
+  const filtered = users.filter(user => user.category === role);
+  setSortedUsers(filtered);
+};
+
+  const resetSort = () => {
+    setSortedUsers(users);
   };
 
   return (
-    <div className="user-page">
-      <div className="user-info">
-        <div className="user-icon"></div>
-        <div className="user-details">
-          <div className="user-name">{userName}</div>
-          <div className="user-role">Administrator</div>
-        </div>
+    <div className="user-management-page">
+      <button className="back-button" onClick={() => navigate("/user")}>Главная страница</button>
+      <h2>Управление пользователями</h2>
+      <div className="sort-buttons">
+        <button onClick={() => sortUsersByRole("provider")}>Провайдер</button>
+        <button onClick={() => sortUsersByRole("employeeuser")}>Работник склада</button>
+        <button onClick={resetSort}>Показать всех</button>
       </div>
-      <div className="user-actions">
-        <button onClick={() => navigate("/admin")} className="back-button">Back to Admin Dashboard</button>
-        <div className="filter-buttons">
-          <button onClick={() => filterUsersByRole("role1")}>Role 1</button>
-          <button onClick={() => filterUsersByRole("role2")}>Role 2</button>
-          <button onClick={() => filterUsersByRole("role3")}>Role 3</button>
-          <button onClick={() => resetFilter()}>Show All</button>
-        </div>
-      </div>
-      <div className="user-list">
-        {filteredUsers.map(user => (
-          <div key={user.id} className="user-block">
-            <div>{user.name}</div>
-            <div>{user.role}</div>
-          </div>
-        ))}
-      </div>
+      <table className="user-table">
+        <thead>
+          <tr>
+            <th>Имя Фамилия</th>
+            <th>Имейл</th>
+            <th>Роль</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedUsers.map(user => (
+            <tr key={user.id}>
+                <td>{user.full_name}</td> {/* Изменено имя поля */}
+              <td>{user.e_mail}</td> {/* Убедитесь, что это поле содержит email, если это не так, замените на правильное поле */}
+              <td>{user.category}</td> {/* Обратите внимание на имя поля */}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-export default UserPage;
-// import React from "react";
-// import "./empListStyle.css";
-
-// const EmpList = ({ users, providers }) => {
-//   return (
-//     <div>
-//       <h2>Employees</h2>
-//       {Array.isArray(users) && users.length > 0 ? (
-//         users.map((user) => (
-//           <div key={user.employee_id}>{user.employee_full_name}</div>
-//         ))
-//       ) : (
-//         <div>No users available</div>
-//       )}
-      
-//       <h2>Providers</h2>
-//       {Array.isArray(providers) && providers.length > 0 ? (
-//         providers.map((provider) => (
-//           <div key={provider.provider_id}>{provider.provider_name}</div>
-//         ))
-//       ) : (
-//         <div>No providers available</div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default EmpList;
-
-
-
+export default EmpList;
