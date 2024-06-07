@@ -12,7 +12,7 @@ class AuthController {
       let foundUser; 
   if (role === "Employee" || role ==="Administrator"){
      foundUser = await db("connect_user").query(
-      `select employee_full_name, category from employeeuser where employeeuser.employee_full_name = $1 and employeeuser.login_password = $2`,
+      `select full_name, category from employeeuser where employeeuser.full_name = $1 and employeeuser.login_password = $2`,
       [username, sha256(password)]
       
     );
@@ -22,7 +22,7 @@ class AuthController {
   else if(role === "Provider"){
    
      foundUser = await db("connect_user").query(
-        `select full_name_of_contact_face, category from provider where provider.full_name_of_contact_face = $1 and provider.login_password = $2`,
+        `select full_name, category from provider where provider.full_name = $1 and provider.login_password = $2`,
         [username, sha256(password)]
       );
   }

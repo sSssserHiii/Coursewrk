@@ -11,7 +11,7 @@ class EmployeeController{
         const { employee_full_name, login_password } = req.body;
         try {
           const newEmployee = await db(req.body.role).query(
-            `insert into employeeuser( employee_full_name, login_password) values ($1, $2) returning *`,
+            `insert into employeeuser( full_name, login_password) values ($1, $2) returning *`,
             [ employee_full_name, login_password]
           );
           res.status(201).json(newEmployee);
@@ -49,7 +49,7 @@ class EmployeeController{
         console.log(req);
 
         const singleEmployee = await db(req.body.role).query(
-          `select * from employeeuser where employeeuser.employee_full_name = $1`,
+          `select * from employeeuser where employeeuser.full_name = $1`,
           [req.body.employee_full_name]
         );
         res.json(singleEmployee);
@@ -87,25 +87,7 @@ class EmployeeController{
             res.status(500).json({ error: "internal server error" });
         }
     }
-    async getProductsNotReceivedThisMonth(req, res) {
-      const { role } = req.body;
-      try {
-          const products = await db(role).query(
-              `SELECT DISTINCT p.title, p.manufacturer, p.date_of_registration
-              FROM product p
-              WHERE p.manufacturer IN (
-                  SELECT DISTINCT p.manufacturer
-                  FROM product p
-                  WHERE EXTRACT(MONTH FROM p.date_of_registration) != EXTRACT(MONTH FROM CURRENT_DATE)
-                  AND p.date_of_registration >= (NOW() - INTERVAL '2 MONTH')::DATE
-              )`
-          );
-          res.json(products.rows);
-      } catch (err) {
-          console.error(err);
-          res.status(500).json({ error: "internal server error" });
-      }
-  }
+    
 }
 
 

@@ -10,7 +10,7 @@ class ProviderController{
         const { login_password, company,full_name_of_contact_face, email } = req.body;
         try {
           const newProvider = await db(req.body.role).query(
-            `insert into provider( login_password, company,full_name_of_contact_face, e_mail) values ($1, $2, $3, $4) returning *`,
+            `insert into provider( login_password, company,full_name, e_mail) values ($1, $2, $3, $4) returning *`,
             [ login_password, company,full_name_of_contact_face, email]
           );
           res.status(201).json(newProvider);
@@ -48,7 +48,7 @@ class ProviderController{
         console.log(req);
 
         const singleProvider = await db(req.body.role).query(
-          `select * from provider where provider.full_name_of_contact_face = $1`,
+          `select * from provider where provider.full_name = $1`,
           [req.body.full_name]
         );
         res.json(singleProvider);
@@ -73,7 +73,7 @@ class ProviderController{
             `UPDATE provider 
              SET login_password = $1,
              company = $2, 
-             full_name_of_contact_face = $3, 
+             full_name = $3, 
              e_mail = $4 
              WHERE provider_id = $5
              RETURNING *`,
@@ -90,10 +90,10 @@ async getProvidersWithSingleProduct(req, res) {
     const { role } = req.body;
     try {
         const providers = await db(role).query(
-            `SELECT pp.provider_id, pp.login_password, pp.company, pp.full_name_of_contact_face, pp.e_mail 
+            `SELECT pp.provider_id, pp.login_password, pp.company, pp.full_name, pp.e_mail 
             FROM provider pp 
             JOIN product pr ON pp.provider_id = pr.provider 
-            GROUP BY pp.provider_id, pp.login_password, pp.company, pp.full_name_of_contact_face, pp.e_mail 
+            GROUP BY pp.provider_id, pp.login_password, pp.company, pp.full_name, pp.e_mail 
             HAVING COUNT(pr.provider) = 1`
         );
         res.json(providers.rows);

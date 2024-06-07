@@ -138,6 +138,30 @@ class ProductController {
         }
     }
 
+
+    async getProductsNotReceivedThisMonth(req, res) {
+        const { role } = req.body;
+        try {
+            const products = await db(role).query(
+                `SELECT DISTINCT p.title, p.manufacturer, p.date_of_registration
+                FROM product p
+                WHERE p.manufacturer IN (
+                    SELECT DISTINCT p.manufacturer
+                    FROM product p
+                    WHERE EXTRACT(MONTH FROM p.date_of_registration) != EXTRACT(MONTH FROM CURRENT_DATE)
+                    AND p.date_of_registration >= (NOW() - INTERVAL '2 MONTH')::DATE
+                )`
+            );
+            res.json(products.rows);
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: "internal server error" });
+        }
+    }
+
+
+
+
 }
 
 module.exports = new ProductController();
